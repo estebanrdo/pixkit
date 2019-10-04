@@ -8,7 +8,7 @@
 // pixkit-image
 #include "../../../modules/pixkit-image/include/pixkit-image.hpp"
 
-void main(){
+int main(int argc, char** argv){
 	 
 
 	//////////////////////////////////////////////////////////////////////////
@@ -19,7 +19,7 @@ void main(){
 	short	CTSize;
 	std::cin	>>	CTSize;
 	if(CTSize!=1&&CTSize!=2){
-		CV_Error(CV_StsBadArg,"");
+		CV_Error(cv::Error::StsBadArg,"");
 	}
 	CTSize	=	CTSize*256;
 	char	name[30];
@@ -43,7 +43,7 @@ void main(){
 //	pixkit::halftoning::dotdiffusion::CNADDCT	cct;	// required when without [case01]
 	cct.load(name);
 	// load image 
-	src	=	cv::imread("../../../data/lena.bmp",CV_LOAD_IMAGE_GRAYSCALE);
+	src	=	cv::imread("../../../data/lena.bmp",cv::IMREAD_GRAYSCALE);
 	if(!src.empty()){
 		// process
 		pixkit::halftoning::dotdiffusion::NADD2013(src,dst,cct);
@@ -60,6 +60,7 @@ void main(){
 		cv::imshow("dst",dst);
 		cv::waitKey(0);
 	}
+        return 0;
 
 
 }

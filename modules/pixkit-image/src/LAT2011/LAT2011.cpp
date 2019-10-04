@@ -49,7 +49,7 @@ bool pixkit::thresholding::LAT2011(const cv::Mat &src,cv::Mat &dst,int windowSiz
 	//////////////////////////////////////////////////////////////////////////
 	///// exceptions
 	if(src.type()!=CV_8UC1){
-		CV_Error(CV_StsBadArg,"[pixkit::thresholding::LAT2011] src's type should be CV_8UC1.");
+		CV_Error(cv::Error::StsBadArg,"[pixkit::thresholding::LAT2011] src's type should be CV_8UC1.");
 	}
 
 

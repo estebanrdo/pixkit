@@ -1,5 +1,7 @@
 #include "../include/pixkit-ml.hpp"
 
+#include <map>
+
 using namespace std;
 
 double Euclidean_Distance(const vector<double>& v1, const vector<double>& v2){
@@ -236,7 +238,7 @@ bool pixkit::classification::KNN(std::vector<SSample> &sample,const std::vector<
 	//////////////////////////////////////////////////////////////////////////
 	/////
 	if(k<0){
-		CV_Error(CV_StsBadArg,"[pixkit::classification::KNN] k should >= 1.");
+		CV_Error(cv::Error::StsBadArg,"[pixkit::classification::KNN] k should >= 1.");
 	}
 
 	vector<vector<double> > DM;
@@ -251,7 +253,7 @@ bool pixkit::classification::FKNN(std::vector<SSample> &sample,const std::vector
 	//////////////////////////////////////////////////////////////////////////
 	/////
 	if(k<0){
-		CV_Error(CV_StsBadArg,"[pixkit::classification::KNN] k should >= 1.");
+		CV_Error(cv::Error::StsBadArg,"[pixkit::classification::KNN] k should >= 1.");
 	}
 
 	vector<vector<double> > DM;

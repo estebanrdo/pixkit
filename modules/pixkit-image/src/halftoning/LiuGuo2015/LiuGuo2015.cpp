@@ -124,10 +124,10 @@ bool pixkit::halftoning::dotdiffusion::CLiuGuo2015::process(const cv::Mat &src1b
 	//////////////////////////////////////////////////////////////////////////
 	///// exceptions
 	if(src1b.type()!=CV_8U){
-		CV_Error(CV_BadNumChannels,"");
+		CV_Error(cv::Error::BadNumChannels,"");
 	}
 	if(src1b.empty()){
-		CV_Error(CV_StsBadArg,"src is empty.");
+		CV_Error(cv::Error::StsBadArg,"src is empty.");
 	}
 	if (pointlist.empty()){
 		CV_Error(CV_StsInternal, "`pointlist` is empty. Please run `getPointList()` with the source image size to get the `pointlist`.");

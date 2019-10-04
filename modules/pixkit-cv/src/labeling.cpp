@@ -7,7 +7,7 @@ bool pixkit::labeling::twoPass(const cv::Mat &src,cv::Mat &dst,const int offset)
 	//////////////////////////////////////////////////////////////////////////
 	///// EXCEPTION
 	if(src.type()!=CV_8UC1){
-		CV_Error(CV_StsBadArg,"[xxx] src's type should be CV_8UC1.");
+		CV_Error(cv::Error::StsBadArg,"[xxx] src's type should be CV_8UC1.");
 	}
 
 	//標籤為從1開始

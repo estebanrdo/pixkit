@@ -12,7 +12,7 @@ bool	pixkit::attack::addGaussianNoise(const cv::Mat &src,cv::Mat &dst,const doub
 		return false;
 	}
 	if(sd<0.){
-		CV_Error(CV_StsBadArg,"[pixkit::attack::addGaussianNoise] sd should bigger than 0.");
+		CV_Error(cv::Error::StsBadArg,"[pixkit::attack::addGaussianNoise] sd should bigger than 0.");
 	}else if(sd==0.){
 		dst=src.clone();
 		return true;

@@ -70,7 +70,7 @@ namespace pixkit{
 		bool medianfilter(const cv::Mat &src,cv::Mat &dst,cv::Size blocksize);
 		
 		// fast box filtering
-		bool FBF(const cv::Mat &src,cv::Mat &dst,cv::Size blockSize,cv::Mat &sum=cv::Mat());
+		bool FBF(const cv::Mat &src,cv::Mat &dst,cv::Size blockSize,cv::Mat &sum/*=cv::Mat()*/);
 
 		// peer group filtering
 		bool PGF1999(const cv::Mat &src,cv::Mat &dst,int &blocksize,double sigma=1.,int alpha=16);

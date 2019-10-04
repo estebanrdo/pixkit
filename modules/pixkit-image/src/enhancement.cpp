@@ -453,7 +453,7 @@ bool pixkit::enhancement::local::Sundarami2011(const cv::Mat &src,cv::Mat &dst, 
 	//////////////////////////////////////////////////////////////////////////////
 	int limt = (int) (N.height*N.width*L + 0.5);
 	int x = N.width/2, y = N.height/2;
-	dst = cvCreateMat(src.rows,src.cols,src.type());
+	dst = cv::Mat(src.rows,src.cols,src.type());
 	for(int i=0;i<dst.rows;i++){
 		for(int j=0;j<dst.cols;j++){
 			std::vector<float> hist(256,0);
@@ -504,10 +504,10 @@ bool pixkit::enhancement::local::LiuJinChenLiuLi2011(const cv::Mat &src,cv::Mat 
 	//////////////////////////////////////////////////////////////////////////
 	// exceptions
 	if(src.type()!=CV_8U){
-		CV_Error(CV_BadNumChannels,"[enhancement::local::LiuJinChenLiuLi2011] image should be grayscale");
+		CV_Error(cv::Error::BadNumChannels,"[enhancement::local::LiuJinChenLiuLi2011] image should be grayscale");
 	}
 	if(N.width>src.cols||N.height>src.rows){
-		CV_Error(CV_StsBadArg,"[enhancement::local::LiuJinChenLiuLi2011] parameter N should < image size");
+		CV_Error(cv::Error::StsBadArg,"[enhancement::local::LiuJinChenLiuLi2011] parameter N should < image size");
 	}
 
 	//////////////////////////////////////////////////////////////////////////
@@ -776,7 +776,7 @@ bool pixkit::enhancement::local::FAHE2006(const cv::Mat &src1b,cv::Mat &dst1b,cv
 		return false;
 	}
 	if(src1b.type()!=CV_8UC1){
-		CV_Error(CV_StsBadArg,"[pixkit::enhancement::local::FAHE2006] allows only grayscale image.");
+		CV_Error(cv::Error::StsBadArg,"[pixkit::enhancement::local::FAHE2006] allows only grayscale image.");
 	}
 
 	//////////////////////////////////////////////////////////////////////////
@@ -1251,7 +1251,7 @@ bool pixkit::enhancement::local::CLAHEnon1987(const cv::Mat &src,cv::Mat &dst, c
 	const int nColors = 256;
 	int x = src.cols/nBlock.width, y = src.rows/nBlock.height;
 
-	dst = cvCreateMat(src.rows,src.cols,src.type());
+	dst = cv::Mat(src.rows,src.cols,src.type());
 
 	std::vector<std::vector<float>> hist(nBlock.height*nBlock.width,std::vector<float> (nColors,0)); //儲存每個title的轉移函式
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1355,7 +1355,7 @@ bool pixkit::enhancement::local::CLAHE1987(const cv::Mat &src,cv::Mat &dst, cv::
 	int limt = (int) (blockSize.height*blockSize.width*L + 0.5);
 	int x = blockSize.width/2, y = blockSize.height/2;
 
-	dst = cvCreateMat(src.rows,src.cols,src.type());
+	dst = cv::Mat(src.rows,src.cols,src.type());
 
 	for(int i=0;i<dst.rows;i++)
 		for(int j=0;j<dst.cols;j++)
@@ -1407,7 +1407,7 @@ bool pixkit::enhancement::local::AHE1974(const cv::Mat &src1b,cv::Mat &dst1b,con
 		return false;
 	}
 	if(src1b.type()!=CV_8UC1){
-		CV_Error(CV_StsBadArg,"[pixkit::enhancement::local::AHE1974] allows only grayscale image.");
+		CV_Error(cv::Error::StsBadArg,"[pixkit::enhancement::local::AHE1974] allows only grayscale image.");
 	}
 
 	//////////////////////////////////////////////////////////////////////////
@@ -1466,7 +1466,7 @@ bool pixkit::enhancement::global::RajuNair2014(const cv::Mat &src,cv::Mat &dst){
 	Mat	tsrc3b	=	src.clone();
 	bool	flag_gray	=	false;
 	if(src.type()==CV_8UC1){
-		cvtColor(tsrc3b,tsrc3b,CV_GRAY2BGR);
+		cvtColor(tsrc3b,tsrc3b,cv::COLOR_GRAY2BGR);
 		flag_gray	=	true;
 	}else if(src.type()==CV_8UC3){
 		// do nothing
@@ -1488,7 +1488,7 @@ bool pixkit::enhancement::global::RajuNair2014(const cv::Mat &src,cv::Mat &dst){
 	//////////////////////////////////////////////////////////////////////////
 	///// convert color
 	Mat	src3b_hsv;
-	cvtColor(tsrc3b,src3b_hsv,CV_BGR2HSV);
+	cvtColor(tsrc3b,src3b_hsv,cv::COLOR_BGR2HSV);
 
 	//////////////////////////////////////////////////////////////////////////
 	///// get M
@@ -1533,9 +1533,9 @@ bool pixkit::enhancement::global::RajuNair2014(const cv::Mat &src,cv::Mat &dst){
 	///// convert back to bgr
 	channel[2]	=	eV.clone();				// eV			to	channel[2]
 	merge(channel,3,src3b_hsv);				// channel		to	src3b_hsv
-	cvtColor(src3b_hsv,tsrc3b,CV_HSV2BGR);	// src3b_hsv	to	tsrc3b
+	cvtColor(src3b_hsv,tsrc3b,cv::COLOR_HSV2BGR);	// src3b_hsv	to	tsrc3b
 	if(flag_gray){	
-		cvtColor(tsrc3b,dst,CV_BGR2GRAY);	// tsrc3b		to	dst1b
+		cvtColor(tsrc3b,dst,cv::COLOR_BGR2GRAY);	// tsrc3b		to	dst1b
 	}else{
 		dst	=	tsrc3b.clone();			// tsrc3b		to	dst1b	
 	}
@@ -1570,7 +1570,7 @@ bool pixkit::enhancement::global::LeeLeeKim2013(const cv::Mat ori,cv::Mat &ret,d
 	int patch=1;	//ideal value 
 	int patch_x=patch;
 	int patch_y=patch;
-	cv::cvtColor(ori,YUV_Mat,CV_BGR2YUV);
+	cv::cvtColor(ori,YUV_Mat,cv::COLOR_BGR2YUV);
 	cv::split(YUV_Mat,YUV);
 	//------------------------reflect margin to solve the margin problem------------------------
 	unsigned char type=0;
@@ -1689,7 +1689,7 @@ bool pixkit::enhancement::global::LeeLeeKim2013(const cv::Mat ori,cv::Mat &ret,d
 	}
 
 	cv::merge(YUV,ret);
-	cv::cvtColor(ret,ret,CV_YUV2BGR);
+	cv::cvtColor(ret,ret,cv::COLOR_YUV2BGR);
 	return 1;
 
 }
@@ -2030,7 +2030,7 @@ bool pixkit::enhancement::global::WadudKabirDewanChae2007(const cv::Mat &src, cv
 bool pixkit::enhancement::global::GlobalHistogramEqualization1992(const cv::Mat &src,cv::Mat &dst){
 
 	if(src.type()!=CV_8UC1){
-		CV_Assert(CV_StsUnmatchedFormats,"[pixkit::enhancement::global::GlobalHistogramEqualization1992] src should be CV_8UC1.");
+		CV_Error(cv::Error::Code::StsUnmatchedFormats,"[pixkit::enhancement::global::GlobalHistogramEqualization1992] src should be CV_8UC1.");
 	}
 
 	const int nColors	=	256;

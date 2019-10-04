@@ -8,12 +8,12 @@
 // pixkit-image
 #include "../../../modules/pixkit-image/include/pixkit-image.hpp"
 
-void main(){
+int main(int argc, char** argv){
 
 	cv::Mat	src,dst;
 
 	// load image
-	src	=	cv::imread("../../../data/lena.bmp",CV_LOAD_IMAGE_GRAYSCALE);
+	src	=	cv::imread("../../../data/lena.bmp",cv::IMREAD_GRAYSCALE);
 	if(!src.empty()){
 		// process
 		if(pixkit::halftoning::dotdiffusion::GuoLiu2009(src,dst,8)){
@@ -26,4 +26,5 @@ void main(){
 			cv::waitKey(0);
 		}
 	}
+        return 0;
 }

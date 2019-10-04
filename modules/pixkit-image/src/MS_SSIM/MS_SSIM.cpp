@@ -5,15 +5,15 @@ bool downSample(cv::Mat &src, cv::Mat &dst)
 	//////////////////////////////////////////////////////////////////////////
 	// exception
 	if(src.empty()||dst.empty()){
-		CV_Error(CV_HeaderIsNull,"[downSample] image is empty");
+		CV_Error(cv::Error::HeaderIsNull,"[downSample] image is empty");
 		return false;
 	}
 	if((src.rows/2) != dst.rows || (src.cols/2) != dst.cols){
-		CV_Error(CV_BadNumChannels,"[downSample] sizes of two images are not multiples of 2");
+		CV_Error(cv::Error::BadNumChannels,"[downSample] sizes of two images are not multiples of 2");
 		return false;
 	}
 	if(src.type()!=CV_8U || dst.type()!=CV_8U){
-		CV_Error(CV_BadNumChannels,"[downSample] image should be grayscale");
+		CV_Error(cv::Error::BadNumChannels,"[downSample] image should be grayscale");
 		return false;
 	}
 
@@ -74,16 +74,16 @@ float pixkit::qualityassessment::MS_SSIM(const cv::Mat &src1, const cv::Mat &src
 	//////////////////////////////////////////////////////////////////////////
 	// exception
 	if(src1.empty()||src2.empty()){
-		CV_Error(CV_HeaderIsNull,"[qualityassessment::MS_SSIM] image is empty");
+		CV_Error(cv::Error::HeaderIsNull,"[qualityassessment::MS_SSIM] image is empty");
 	}
 	if(src1.cols != src2.cols || src1.rows != src2.rows){
-		CV_Error(CV_StsBadArg,"[qualityassessment::MS_SSIM] sizes of two images are not equal");
+		CV_Error(cv::Error::StsBadArg,"[qualityassessment::MS_SSIM] sizes of two images are not equal");
 	}
 	if(src1.type()!=CV_8U || src2.type()!=CV_8U){
-		CV_Error(CV_BadNumChannels,"[qualityassessment::MS_SSIM] image should be grayscale");
+		CV_Error(cv::Error::BadNumChannels,"[qualityassessment::MS_SSIM] image should be grayscale");
 	}
 	if(src1.cols < 32 || src1.rows < 32 || src2.cols < 32 || src2.rows < 32){
-		CV_Error(CV_BadNumChannels,"[qualityassessment::MS_SSIM] sizes of two images should be greater than 32x32");
+		CV_Error(cv::Error::BadNumChannels,"[qualityassessment::MS_SSIM] sizes of two images should be greater than 32x32");
 	}
 
 	//////////////////////////////////////////////////////////////////////////

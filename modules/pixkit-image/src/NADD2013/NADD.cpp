@@ -581,7 +581,7 @@ bool pixkit::halftoning::dotdiffusion::CNADDCT::save(char name[]){
 
 	FILE	*fn=fopen(name,"wb");
 	if(fn==NULL){
-		CV_Error(CV_StsNullPtr,"[pixkit::halftoning::dotdiffusion::CNADDCT::save] fn is NULL.");
+		CV_Error(cv::Error::StsNullPtr,"[pixkit::halftoning::dotdiffusion::CNADDCT::save] fn is NULL.");
 		return false;
 	}
 	//////////////////////////////////////////////////////////////////////////
@@ -635,7 +635,7 @@ bool pixkit::halftoning::dotdiffusion::CNADDCT::load(char name[]){
 
 	FILE	*fn=fopen(name,"rb");
 	if(fn==NULL){
-		CV_Error(CV_StsNullPtr,"[pixkit::halftoning::dotdiffusion::CNADDCT::load] fn is NULL.");
+		CV_Error(cv::Error::StsNullPtr,"[pixkit::halftoning::dotdiffusion::CNADDCT::load] fn is NULL.");
 		return false;
 	}
 	//////////////////////////////////////////////////////////////////////////
@@ -701,11 +701,11 @@ bool pixkit::halftoning::dotdiffusion::NADD2013(cv::Mat &src,cv::Mat &dst,pixkit
 	//////////////////////////////////////////////////////////////////////////
 	///// exceptions
 	if(src.type()!=CV_8U){
-//		CV_Error(CV_BadNumChannels,"");
+//		CV_Error(cv::Error::BadNumChannels,"");
 		return false;
 	}
 	if(src.empty()){
-//		CV_Error(CV_StsBadArg,"src is empty.");
+//		CV_Error(cv::Error::StsBadArg,"src is empty.");
 		return false;
 	}
 

@@ -58,10 +58,10 @@ bool pixkit::filtering::FBF(const cv::Mat &src,cv::Mat &dst,cv::Size blockSize,c
 	////////////////////////////////////////////////////////////////////////// ok
 	///// exceptions
 	if(src.type()!=CV_32FC1&&src.type()!=CV_8UC1){
-		CV_Error(CV_StsBadArg,"[pixkit::filtering::FBF] src type should be either CV_8UC1 or CV_32FC1.");
+		CV_Error(cv::Error::StsBadArg,"[pixkit::filtering::FBF] src type should be either CV_8UC1 or CV_32FC1.");
 	}
 	if(blockSize.height%2==0||blockSize.width%2==0){
-		CV_Error(CV_StsBadArg,"[pixkit::filtering::FBF] block size should be odd.");
+		CV_Error(cv::Error::StsBadArg,"[pixkit::filtering::FBF] block size should be odd.");
 	}
 
 
@@ -78,7 +78,7 @@ bool pixkit::filtering::FBF(const cv::Mat &src,cv::Mat &dst,cv::Size blockSize,c
 		cv::integral(src,sum,CV_64FC1);
 	}else{
 		if(sum.type()!=CV_64FC1){
-			CV_Error(CV_StsBadArg,"[pixkit::filtering::FBF] sum type should be CV_64FC1.");
+			CV_Error(cv::Error::StsBadArg,"[pixkit::filtering::FBF] sum type should be CV_64FC1.");
 		}
 	}
 

@@ -35,10 +35,10 @@
 # include <math.h>   
 # include <string.h>   
 #include "../../include/pixkit-image.hpp"
-#include <opencv2\highgui\highgui.hpp>
-#include <opencv2\core\core.hpp>
-#include <opencv2\imgproc\imgproc.hpp>
-#include <opencv\cv.h>
+#include <opencv2/highgui.hpp>
+#include <opencv2/core.hpp>
+#include <opencv2/imgproc.hpp>
+#include <opencv2/core/types_c.h>
 
 # define MAX_RETINEX_SCALES    8       
 # define MIN_GAUSSIAN_SCALE   16       
@@ -428,39 +428,43 @@ bool pixkit::enhancement::local::MSRCR1997(const cv::Mat &src,cv::Mat &dst,int N
 	}
 
 
-	IplImage * orig=& IplImage(src);
-	IplImage * out = NULL;   
+	//IplImage * orig=& IplImage(src);
+	//IplImage * out = NULL;   
+        cv::Mat orig(src);
 
 	unsigned char * sImage, * dImage;   
 	int x, y;   
 	int nWidth, nHeight, step;  
 
-	if ( orig == NULL )	{   
+	//if ( orig == NULL )	{
+        if ( orig.empty() )	{   
 		printf( "Could not get image. Program exits!\n" );  
 		CV_Assert(false);
 	}   
-	nWidth = orig->width;   
-	nHeight = orig->height;   
-	step = orig->widthStep/sizeof( unsigned char );
+	nWidth = orig.cols;   
+	nHeight = orig.rows;   
+	step = orig.step;//orig->widthStep/sizeof( unsigned char );
 	dst=cv::Mat::zeros(nHeight,nWidth,CV_8UC3);
 	sImage = new unsigned char[nHeight*nWidth*3];  
 	dImage = new unsigned char[nHeight*nWidth*3];   
 
-	if ( orig->nChannels == 3 ){   
+	//if ( orig->nChannels == 3 ){
+        int nChannels = orig.channels(); 
+        if ( nChannels == 3 ){   
 		for ( y = 0; y < nHeight; y++ ){   
 			for ( x = 0; x < nWidth; x++ )   
 			{   
-				sImage[(y*nWidth+x)*orig->nChannels] = orig->imageData[y*step+x*orig->nChannels];   
-				sImage[(y*nWidth+x)*orig->nChannels+1] = orig->imageData[y*step+x*orig->nChannels+1];   
-				sImage[(y*nWidth+x)*orig->nChannels+2] = orig->imageData[y*step+x*orig->nChannels+2];   
+				sImage[(y*nWidth+x)*nChannels] = orig.data[y*step+x*nChannels];   
+				sImage[(y*nWidth+x)*nChannels+1] = orig.data[y*step+x*nChannels+1];   
+				sImage[(y*nWidth+x)*nChannels+2] = orig.data[y*step+x*nChannels+2];   
 			} 
 		}
 	}   
-	memcpy( dImage, sImage, nWidth*nHeight*orig->nChannels );   
+	memcpy( dImage, sImage, nWidth*nHeight*nChannels );   
 
-	MSRCR_Main( dImage, nWidth, nHeight, orig->nChannels);
+	MSRCR_Main( dImage, nWidth, nHeight, nChannels);
 
-	for ( y = 0; y < nHeight*nWidth*orig->nChannels; y=y+orig->nChannels){   
+	for ( y = 0; y < nHeight*nWidth*nChannels; y=y+nChannels){   
 		dst.data[y]=dImage[y];
 		dst.data[y+1]=dImage[y+1];
 		dst.data[y+2]=dImage[y+2];

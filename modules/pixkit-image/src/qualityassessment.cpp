@@ -215,10 +215,10 @@ float pixkit::qualityassessment::PSNR(const cv::Mat &src1,const cv::Mat &src2){
 	//////////////////////////////////////////////////////////////////////////
 	///// exceptions
 	if(src1.empty()||src2.empty()){
-		CV_Error(CV_HeaderIsNull,"[qualityassessment::PSNR] image is empty");
+		CV_Error(cv::Error::HeaderIsNull,"[qualityassessment::PSNR] image is empty");
 	}
 	if(src1.type()!=src2.type()){
-		CV_Error(CV_StsBadArg,"[qualityassessment::PSNR] both types of image do not match");
+		CV_Error(cv::Error::StsBadArg,"[qualityassessment::PSNR] both types of image do not match");
 	}
 
 	//////////////////////////////////////////////////////////////////////////
@@ -240,10 +240,10 @@ float pixkit::qualityassessment::HPSNR(const cv::Mat &src1, const cv::Mat &src2,
 	//////////////////////////////////////////////////////////////////////////
 	///// exceptions
 	if(src1.empty()||src2.empty()){
-		CV_Error(CV_HeaderIsNull,"[qualityassessment::HPSNR] image is empty");
+		CV_Error(cv::Error::HeaderIsNull,"[qualityassessment::HPSNR] image is empty");
 	}
 	if(src1.type()!=src2.type()){
-		CV_Error(CV_StsBadArg,"[qualityassessment::HPSNR] both types of image do not match");
+		CV_Error(cv::Error::StsBadArg,"[qualityassessment::HPSNR] both types of image do not match");
 	}
 
 	//////////////////////////////////////////////////////////////////////////
@@ -367,12 +367,12 @@ bool pixkit::qualityassessment::spectralAnalysis_Bartlett(cv::InputArray &_src,c
 	//////////////////////////////////////////////////////////////////////////
 	///// exceptions
 	if(specSize.width!=specSize.height){
-		CV_Error(CV_StsBadArg,format("[pixkit::qualityassessment::spectralAnalysis_Bartlett] specSize's width (%d) and height (%d) should be the same",specSize.width,specSize.height));
+		CV_Error(cv::Error::StsBadArg,format("[pixkit::qualityassessment::spectralAnalysis_Bartlett] specSize's width (%d) and height (%d) should be the same",specSize.width,specSize.height));
 	}
 	Mat	src	=	_src.getMat();
 	if(!rand_sample){
 		if(src.size()!=cv::Size(specSize.width,specSize.height*rounds)){	// conventional way
-			CV_Error(CV_StsBadSize,"[pixkit::qualityassessment::spectralAnalysis_Bartlett] _src's height should be **rounds** *_src.cols");
+			CV_Error(cv::Error::StsBadSize,"[pixkit::qualityassessment::spectralAnalysis_Bartlett] _src's height should be **rounds** *_src.cols");
 		}	
 	}
 		
@@ -513,13 +513,13 @@ float pixkit::qualityassessment::SSIM(const cv::Mat &src1, const cv::Mat &src2)
 	//////////////////////////////////////////////////////////////////////////
 	// exception
 	if(src1.empty()||src2.empty()){
-		CV_Error(CV_HeaderIsNull,"[qualityassessment::SSIM] image is empty");
+		CV_Error(cv::Error::HeaderIsNull,"[qualityassessment::SSIM] image is empty");
 	}
 	if(src1.cols != src2.cols || src1.rows != src2.rows){
-		CV_Error(CV_StsBadArg,"[qualityassessment::SSIM] sizes of two images are not equal");
+		CV_Error(cv::Error::StsBadArg,"[qualityassessment::SSIM] sizes of two images are not equal");
 	}
 	if(src1.type()!=CV_8U || src2.type()!=CV_8U){
-		CV_Error(CV_BadNumChannels,"[qualityassessment::SSIM] image should be grayscale");
+		CV_Error(cv::Error::BadNumChannels,"[qualityassessment::SSIM] image should be grayscale");
 	}
 	//////////////////////////////////////////////////////////////////////////
 
@@ -567,13 +567,13 @@ float pixkit::qualityassessment::MSSIM(const cv::Mat &src1, const cv::Mat &src2,
 	//////////////////////////////////////////////////////////////////////////
 	// exception
 	if(src1.empty()||src2.empty()){
-		CV_Error(CV_HeaderIsNull,"[qualityassessment::MSSIM] image is empty");
+		CV_Error(cv::Error::HeaderIsNull,"[qualityassessment::MSSIM] image is empty");
 	}
 	if(src1.cols != src2.cols || src1.rows != src2.rows){
-		CV_Error(CV_StsBadArg,"[qualityassessment::MSSIM] sizes of two images are not equal");
+		CV_Error(cv::Error::StsBadArg,"[qualityassessment::MSSIM] sizes of two images are not equal");
 	}
 	if(src1.type()!=CV_8U || src2.type()!=CV_8U){
-		CV_Error(CV_BadNumChannels,"[qualityassessment::MSSIM] image should be grayscale");
+		CV_Error(cv::Error::BadNumChannels,"[qualityassessment::MSSIM] image should be grayscale");
 	}
 
 	//////////////////////////////////////////////////////////////////////////

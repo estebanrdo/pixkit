@@ -39,7 +39,7 @@
 //========================================================================
 
 #include "../../include/pixkit-image.hpp"
-#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/imgproc.hpp>
 
 // calc cdf of Gaussian
 inline double calcCDF_Gaussian(double &src,double &mean,double &sd){
@@ -70,7 +70,7 @@ inline bool calcAreaMean(const cv::Mat &src,
 		//////////////////////////////////////////////////////////////////////////
 		///// exceptions
 		if(blockSize.width%2==0||blockSize.height%2==0){
-			CV_Error(CV_StsBadArg,"[calcAreaMean] either block's height or width is 0.");
+			CV_Error(cv::Error::StsBadArg,"[calcAreaMean] either block's height or width is 0.");
 		}
 
 
@@ -181,27 +181,27 @@ inline bool calcAreaMean(const cv::Mat &src,
 	///// Exceptions
 	// blockSize
 	if(blockSize.height>=src.rows || blockSize.width>=src.cols){
-		CV_Error(CV_StsBadArg,"[pixkit::enhancement::local::POHE2013] block size should be smaller than image size. ");
+		CV_Error(cv::Error::StsBadArg,"[pixkit::enhancement::local::POHE2013] block size should be smaller than image size. ");
 	}
 	if(blockSize.height%2==0 || blockSize.width%2==0){
-		CV_Error(CV_StsBadArg,"[pixkit::enhancement::local::POHE2013] both block's width and height should be odd.");
+		CV_Error(cv::Error::StsBadArg,"[pixkit::enhancement::local::POHE2013] both block's width and height should be odd.");
 	}
 	if(blockSize.height==1&&blockSize.width==1){
-		CV_Error(CV_StsBadArg,"[pixkit::enhancement::local::POHE2013] blockSize=(1,1) will turn entire image to dead white.");
+		CV_Error(cv::Error::StsBadArg,"[pixkit::enhancement::local::POHE2013] blockSize=(1,1) will turn entire image to dead white.");
 	}
 	// src
 	if(src.type()!=CV_8UC1&&src.type()!=CV_8UC3&&src.type()!=CV_32FC1){
-		CV_Error(CV_StsBadArg,"[pixkit::enhancement::local::POHE2013] src should be one of CV_8UC1, CV_8UC3, and CV_32FC1.");
+		CV_Error(cv::Error::StsBadArg,"[pixkit::enhancement::local::POHE2013] src should be one of CV_8UC1, CV_8UC3, and CV_32FC1.");
 	}
 	// sum and sqsum
 	if(!sum.empty()){
 		if(sum.type()!=CV_64FC1){
-			CV_Error(CV_StsBadArg,"[pixkit::enhancement::local::POHE2013] both sum and sqsum should be CV_64FC1");
+			CV_Error(cv::Error::StsBadArg,"[pixkit::enhancement::local::POHE2013] both sum and sqsum should be CV_64FC1");
 		}
 	}
 	if(!sqsum.empty()){
 		if(sqsum.type()!=CV_64FC1){
-			CV_Error(CV_StsBadArg,"[pixkit::enhancement::local::POHE2013] both sum and sqsum should be CV_64FC1");
+			CV_Error(cv::Error::StsBadArg,"[pixkit::enhancement::local::POHE2013] both sum and sqsum should be CV_64FC1");
 		}
 	}
 	
@@ -220,11 +220,11 @@ inline bool calcAreaMean(const cv::Mat &src,
 			CV_Assert(false);
 		}
 		// convert color
-		cvtColor(src,_src3x,CV_BGR2Lab);
+		cvtColor(src,_src3x,cv::COLOR_BGR2Lab);
 		int	from_to[]={0,0};
 		mixChannels(&_src3x,1,&_src1x,1,from_to,1);
 	}else{
-		CV_Error(CV_StsUnsupportedFormat,"[pixkit::enhancement::local::POHE2013] images should be grayscale or color.");
+		CV_Error(cv::Error::StsUnsupportedFormat,"[pixkit::enhancement::local::POHE2013] images should be grayscale or color.");
 	}
 
 	//////////////////////////////////////////////////////////////////////////
@@ -298,9 +298,9 @@ inline bool calcAreaMean(const cv::Mat &src,
 	}else if(src.channels()==3){
 		int	from_to[]={0,0};
 		mixChannels(&tdst,1,&_src3x,1,from_to,1);
-		cvtColor(_src3x,dst,CV_Lab2BGR);
+		cvtColor(_src3x,dst,cv::COLOR_Lab2BGR);
 	}else{
-		CV_Error(CV_StsUnsupportedFormat,"[pixkit::enhancement::local::POHE2013] images should be grayscale or color.");
+		CV_Error(cv::Error::StsUnsupportedFormat,"[pixkit::enhancement::local::POHE2013] images should be grayscale or color.");
 	}
 	
 	return true;

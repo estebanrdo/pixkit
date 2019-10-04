@@ -7,12 +7,12 @@ bool DirectBinarySearch_QLver(const cv::Mat &src, cv::Mat &dst, double highValue
 	//////////////////////////////////////////////////////////////////////////
 	// exception
 	if(src.empty()){
-		CV_Error(CV_HeaderIsNull,"[DirectBinarySearch_QLver] image is empty");
+		CV_Error(cv::Error::HeaderIsNull,"[DirectBinarySearch_QLver] image is empty");
 		return false;
 	}
 
 	if(src.type()!=CV_8U){
-		CV_Error(CV_BadNumChannels,"[DirectBinarySearch_QLver] image should be grayscale");
+		CV_Error(cv::Error::BadNumChannels,"[DirectBinarySearch_QLver] image should be grayscale");
 		return false;
 	}
 
@@ -220,15 +220,15 @@ bool pixkit::comp::DBSBTC2011(cv::Mat src, cv::Mat &dst, int blockSize)
 	//////////////////////////////////////////////////////////////////////////
 	// exception
 	if(src.empty()){
-		CV_Error(CV_HeaderIsNull,"[comp::DBSBTC2011] image is empty");
+		CV_Error(cv::Error::HeaderIsNull,"[comp::DBSBTC2011] image is empty");
 		return false;
 	}
 	if(src.type()!=CV_8U){
-		CV_Error(CV_BadNumChannels,"[comp::DBSBTC2011] image type should be gray scale");
+		CV_Error(cv::Error::BadNumChannels,"[comp::DBSBTC2011] image type should be gray scale");
 		return false;
 	}
 	if(blockSize!=8 && blockSize!=16){
-		CV_Error(CV_StsBadArg,"[comp::DBSBTC2011] BlockSize should be 8 or 16.");
+		CV_Error(cv::Error::StsBadArg,"[comp::DBSBTC2011] BlockSize should be 8 or 16.");
 		return false;
 	}
 
@@ -245,7 +245,7 @@ bool pixkit::comp::DBSBTC2011(cv::Mat src, cv::Mat &dst, int blockSize)
 		alphaSize = 3;
 		segSize = 4;
 	}else{
-		CV_Error(CV_StsBadArg,"[comp::DBSBTC2011] BlockSize should be 8 or 16.");
+		CV_Error(cv::Error::StsBadArg,"[comp::DBSBTC2011] BlockSize should be 8 or 16.");
 		return false;
 	}
 
@@ -276,7 +276,7 @@ bool pixkit::comp::DBSBTC2011(cv::Mat src, cv::Mat &dst, int blockSize)
 				segData[i] = alpha[1][i];
 			}
 	}else{
-		CV_Error(CV_StsBadArg,"[comp::DBSBTC2011] BlockSize should be 8 or 16.");
+		CV_Error(cv::Error::StsBadArg,"[comp::DBSBTC2011] BlockSize should be 8 or 16.");
 		return false;
 	}
 

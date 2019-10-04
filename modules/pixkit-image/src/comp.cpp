@@ -5,10 +5,10 @@ bool pixkit::comp::BTC(const cv::Mat &src,cv::Mat &dst,int blockSize){
 	//////////////////////////////////////////////////////////////////////////
 	///// exceptions
 	if(src.type()!=CV_8U){
-		CV_Error(CV_BadNumChannels,"[pixkit::comp::BTC] image should be grayscale");
+		CV_Error(cv::Error::BadNumChannels,"[pixkit::comp::BTC] image should be grayscale");
 	}
 	if(blockSize%2!=0){
-		CV_Error(CV_StsBadArg,"[pixkit::comp::BTC] blockSize should be even.");
+		CV_Error(cv::Error::StsBadArg,"[pixkit::comp::BTC] blockSize should be even.");
 	}
 
 	//////////////////////////////////////////////////////////////////////////
@@ -97,10 +97,10 @@ bool pixkit::comp::EDBTC(const cv::Mat &src,cv::Mat &dst,int blockSize,EDBTC_TYP
 	//////////////////////////////////////////////////////////////////////////
 	///// exceptions
 	if(src.type()!=CV_8U){
-		CV_Error(CV_BadNumChannels,"[pixkit::comp::EDBTC] image should be grayscale");
+		CV_Error(cv::Error::BadNumChannels,"[pixkit::comp::EDBTC] image should be grayscale");
 	}
 	if(blockSize%2!=0){
-		CV_Error(CV_StsBadArg,"[pixkit::comp::EDBTC] blockSize should be even.");
+		CV_Error(cv::Error::StsBadArg,"[pixkit::comp::EDBTC] blockSize should be even.");
 	}
 
 
@@ -222,15 +222,15 @@ bool pixkit::comp::ODBTC(const cv::Mat &src,cv::Mat &dst,int blockSize,ODBTC_TYP
 	//////////////////////////////////////////////////////////////////////////
 	///// exceptions
 	if(src.type()!=CV_8U){
-		CV_Error(CV_BadNumChannels,"[pixkit::comp::ODBTC] image should be grayscale");
+		CV_Error(cv::Error::BadNumChannels,"[pixkit::comp::ODBTC] image should be grayscale");
 	}
 	if(type==ODBTC_TYPE_ClusteredDot){
 		if(blockSize!=8){
-			CV_Error(CV_StsBadArg,"[pixkit::comp::ODBTC] blockSize should be 8.");
+			CV_Error(cv::Error::StsBadArg,"[pixkit::comp::ODBTC] blockSize should be 8.");
 		}
 	}else if(type==ODBTC_TYPE_DispersedDot){
 		if(blockSize!=4&&blockSize!=8&&blockSize!=16&&blockSize!=32&&blockSize!=64){
-			CV_Error(CV_StsBadArg,"[pixkit::comp::ODBTC] blockSize should be 4, 8, 16, 32, or 64.");
+			CV_Error(cv::Error::StsBadArg,"[pixkit::comp::ODBTC] blockSize should be 4, 8, 16, 32, or 64.");
 		}
 	}else{
 		CV_Assert(false);
@@ -487,10 +487,10 @@ bool pixkit::comp::DDBTC2014(const cv::Mat &src,cv::Mat &dst,int blockSize){
 	//////////////////////////////////////////////////////////////////////////
 	///// exceptions
 	if(src.type()!=CV_8U){
-		CV_Error(CV_BadNumChannels,"[pixkit::comp::DDBTC2014] image should be grayscale");
+		CV_Error(cv::Error::BadNumChannels,"[pixkit::comp::DDBTC2014] image should be grayscale");
 	}
 	if(blockSize!=8&&blockSize!=16){
-		CV_Error(CV_StsBadArg,"[pixkit::comp::DDBTC2014] blockSize should be 8 or 16.");
+		CV_Error(cv::Error::StsBadArg,"[pixkit::comp::DDBTC2014] blockSize should be 8 or 16.");
 	}
 
 	// = = = = = pre-defined data = = = = = //
@@ -581,7 +581,7 @@ bool pixkit::comp::DDBTC2014(const cv::Mat &src,cv::Mat &dst,int blockSize){
 	for(int i=0;i<src.rows;i+=CM_Size){
 		for(int j=0;j<src.cols;j+=CM_Size){
 
-			// = = = = = 彌補不該出現之顏色的處理方法 = = = = = //
+			// = = = = = \C0\B1\B8氻\A3\B8茈X\B2{\A4\A7\C3C\A6滫暝B3B\B2z\A4\E8\AAk = = = = = //
 			// derive the local mean, maxv and minv
 			float	mean=0.;
 			double	maxv=tdst.data[i*tdst.cols+j],minv=tdst.data[i*tdst.cols+j];
@@ -656,10 +656,10 @@ bool pixkit::comp::DDBTC2014(const cv::Mat &src,cv::Mat &dst,int blockSize){
 bool pixkit::comp::ColorBTC::CAMBTC1984(const cv::Mat &src, cv::Mat &dst, const int BlockSize){
 
 	if(src.type()!=CV_8UC3){
-		CV_Error(CV_BadNumChannels,"[pixkit::comp::BTC::ColorBTC] image should be color");
+		CV_Error(cv::Error::BadNumChannels,"[pixkit::comp::BTC::ColorBTC] image should be color");
 	}
 	if(src.cols%BlockSize!=0 || src.rows%BlockSize!=0){
-		CV_Error(CV_StsBadArg,"[pixkit::comp::BTC::ColorBTC] Src size mod block size sould be 0");
+		CV_Error(cv::Error::StsBadArg,"[pixkit::comp::BTC::ColorBTC] Src size mod block size sould be 0");
 	}
 
 	double CountAmount[2]={0},Quant[3][2]={0},EuDistance[2]={0}; //0 small, 1 big
@@ -674,7 +674,7 @@ bool pixkit::comp::ColorBTC::CAMBTC1984(const cv::Mat &src, cv::Mat &dst, const 
 						ChannelMean+=src.at<cv::Vec3b>(m,n)[channel];
 				ChannelMean/=(BlockSize*BlockSize);
 
-				//大於跟小於的數量
+				//\A4j\A9\F3\B8\F2\A4p\A9顗獐げq
 				CountAmount[0]=0;
 				CountAmount[1]=0;
 				for(int m=i; m<i+BlockSize; m++){
@@ -722,10 +722,10 @@ bool pixkit::comp::ColorBTC::CAMBTC1984(const cv::Mat &src, cv::Mat &dst, const 
 bool pixkit::comp::ColorBTC::CCC1986(const cv::Mat &src, cv::Mat &dst, const int BlockSize){
 
 	if(src.type()!=CV_8UC3){
-		CV_Error(CV_BadNumChannels,"[pixkit::comp::BTC::ColorBTC] image should be color");
+		CV_Error(cv::Error::BadNumChannels,"[pixkit::comp::BTC::ColorBTC] image should be color");
 	}
 	if(src.cols%BlockSize!=0 || src.rows%BlockSize!=0){
-		CV_Error(CV_StsBadArg,"[pixkit::comp::BTC::ColorBTC] Src size mod block size sould be 0");
+		CV_Error(cv::Error::StsBadArg,"[pixkit::comp::BTC::ColorBTC] Src size mod block size sould be 0");
 	}
 
 	cv::Mat B(src.size(),CV_32FC1),G(src.size(),CV_32FC1),R(src.size(),CV_32FC1),Lumin(src.size(),CV_32FC1);
@@ -812,7 +812,7 @@ bool pixkit::comp::ColorBTC::CCC1986(const cv::Mat &src, cv::Mat &dst, const int
 bool pixkit::comp::ColorBTC::CEBTC2010(const cv::Mat &src, cv::Mat &dst, const int BlockSize){
 
 	if(src.type()!=CV_8UC3){
-		CV_Error(CV_BadNumChannels,"[pixkit::comp::BTC::ColorBTC] image should be color");
+		CV_Error(cv::Error::BadNumChannels,"[pixkit::comp::BTC::ColorBTC] image should be color");
 	}
 
 	int AQCBits = 3;
@@ -948,10 +948,10 @@ bool pixkit::comp::ColorBTC::CEBTC2010(const cv::Mat &src, cv::Mat &dst, const i
 bool pixkit::comp::ColorBTC::FS_BMO2014(const cv::Mat &src, cv::Mat &dst, const int BlockSize, int MoreCompressFlag, int THBO){
 
 	if(src.type()!=CV_8UC3){
-		CV_Error(CV_BadNumChannels,"[pixkit::comp::BTC::ColorBTC] image should be color");
+		CV_Error(cv::Error::BadNumChannels,"[pixkit::comp::BTC::ColorBTC] image should be color");
 	}
 	if(src.cols%BlockSize!=0 || src.rows%BlockSize!=0){
-		CV_Error(CV_StsBadArg,"[pixkit::comp::BTC::ColorBTC] Src size mod block size sould be 0");
+		CV_Error(cv::Error::StsBadArg,"[pixkit::comp::BTC::ColorBTC] Src size mod block size sould be 0");
 	}
 
 	int **FSBitmap = new int *[BlockSize];
@@ -1106,17 +1106,17 @@ bool pixkit::comp::ColorBTC::FS_BMO2014(const cv::Mat &src, cv::Mat &dst, const 
 bool pixkit::comp::ColorBTC::IBTC_KQ2014(const cv::Mat &src, cv::Mat &dst, const int BlockSize){
 
 	if(src.type()!=CV_8UC3){
-		CV_Error(CV_BadNumChannels,"[pixkit::comp::BTC::ColorBTC] image should be color");
+		CV_Error(cv::Error::BadNumChannels,"[pixkit::comp::BTC::ColorBTC] image should be color");
 	}
 	if(src.cols%BlockSize!=0 || src.rows%BlockSize!=0){
-		CV_Error(CV_StsBadArg,"[pixkit::comp::BTC::ColorBTC] Src size mod block size sould be 0");
+		CV_Error(cv::Error::StsBadArg,"[pixkit::comp::BTC::ColorBTC] Src size mod block size sould be 0");
 	}
 
 	cv::Mat HSV;
 	//Tool::RGBtransHSV(src,HSV);
 	cv::Mat tsrc;
 	src.convertTo(tsrc,CV_32FC3);
-	cv::cvtColor(tsrc,HSV,CV_BGR2HSV);
+	cv::cvtColor(tsrc,HSV,cv::COLOR_BGR2HSV);
 
 	//k-means set
 	cv::Mat Data(BlockSize*BlockSize,1,CV_32FC1), Cluster, Centers;
@@ -1132,7 +1132,7 @@ bool pixkit::comp::ColorBTC::IBTC_KQ2014(const cv::Mat &src, cv::Mat &dst, const
 					for(int n=j; n<j+BlockSize; n++)
 						Data.ptr<float>((m%BlockSize)*BlockSize+(n%BlockSize))[0]=HSV.at<cv::Vec3f>(m,n)[channel];
 
-				cv::kmeans(Data, ClusterK, Cluster, cv::TermCriteria(CV_TERMCRIT_ITER|CV_TERMCRIT_EPS, 10, 0.1), Attempts, cv::KMEANS_PP_CENTERS, Centers);
+				cv::kmeans(Data, ClusterK, Cluster, cv::TermCriteria(cv::TermCriteria::Type::MAX_ITER|cv::TermCriteria::Type::EPS, 10, 0.1), Attempts, cv::KMEANS_PP_CENTERS, Centers);
 
 				for(int m=i; m<i+BlockSize; m++){
 					for(int n=j; n<j+BlockSize; n++){
@@ -1146,7 +1146,7 @@ bool pixkit::comp::ColorBTC::IBTC_KQ2014(const cv::Mat &src, cv::Mat &dst, const
 	}
 
 	cv::Mat tdst;
-	cv::cvtColor(HSV,tdst,CV_HSV2BGR);
+	cv::cvtColor(HSV,tdst,cv::COLOR_HSV2BGR);
 	cv::normalize(tdst,tdst,0,255,32);
 	tdst.convertTo(tdst,CV_8UC3);
 	dst=tdst.clone();
@@ -1158,10 +1158,10 @@ bool pixkit::comp::ColorBTC::CDDBTC2015(const cv::Mat &src, cv::Mat &dst, const 
 	//////////////////////////////////////////////////////////////////////////
 	///// exceptions
 	if(src.type()!=CV_8UC3){
-		CV_Error(CV_BadNumChannels,"[pixkit::comp::BTC::ColorBTC] image should be color");
+		CV_Error(cv::Error::BadNumChannels,"[pixkit::comp::BTC::ColorBTC] image should be color");
 	}
 	if(BlockSize!=4&&BlockSize!=8&&BlockSize!=16){
-		CV_Error(CV_StsBadArg,"[pixkit::comp::BTC::ColorBTC] CDDBTC BlockSize should be 4, 8 or 16.");
+		CV_Error(cv::Error::StsBadArg,"[pixkit::comp::BTC::ColorBTC] CDDBTC BlockSize should be 4, 8 or 16.");
 	}
 
 	// 	Mat GrayImage;
@@ -1280,7 +1280,7 @@ bool pixkit::comp::ColorBTC::CDDBTC2015(const cv::Mat &src, cv::Mat &dst, const 
 	for(int i=0;i<src.rows;i+=CM_Size){
 		for(int j=0;j<src.cols;j+=CM_Size){
 
-			// = = = = = 彌補不該出現之顏色的處理方法 = = = = = //
+			// = = = = = \C0\B1\B8氻\A3\B8茈X\B2{\A4\A7\C3C\A6滫暝B3B\B2z\A4\E8\AAk = = = = = //
 			// derive the local mean, maxv and minv
 			float	mean=0.;
 			short	count_mean=0;
@@ -1378,11 +1378,11 @@ bool pixkit::comp::JPEG(const cv::Mat &src1b, cv::Mat &dst1b, const int jpeg_qua
 	// encode
 	std::vector<uchar>	buff;
 	std::vector<int> param = std::vector<int>(2);
-	param[0] = CV_IMWRITE_JPEG_QUALITY;
+	param[0] = cv::IMWRITE_JPEG_QUALITY;
 	param[1] = jpeg_quality;	// default(95) 0-100
 	// decode
 	imencode(".jpg", src1b, buff, param);
-	dst1b = imdecode(cv::Mat(buff), CV_LOAD_IMAGE_UNCHANGED);
+	dst1b = imdecode(cv::Mat(buff), cv::IMREAD_UNCHANGED);
 
 	return true;
 }

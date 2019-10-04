@@ -366,10 +366,10 @@ bool pixkit::multitoning::ordereddithering::iCLUDMS2016_genDitherArray(std::vect
 	//////////////////////////////////////////////////////////////////////////
 	///// exceptions
 	if(nTones<2){
-		CV_Error(CV_StsBadArg,"nColors should >= 2.");
+		CV_Error(cv::Error::StsBadArg,"nColors should >= 2.");
 	}
 	if(daSize<1){
-		CV_Error(CV_StsBadArg,"daSize should >= 1.");
+		CV_Error(cv::Error::StsBadArg,"daSize should >= 1.");
 	}
 	if(sd_update<sd_init){
 		CV_Assert(false);

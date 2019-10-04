@@ -6,6 +6,7 @@
 #include "../include/pixkit-image.hpp"
 #include <opencv2/imgproc/imgproc.hpp>
 #include <ctime>
+#include <cmath>
 
 using namespace	cv;
 using namespace	std;
@@ -20,10 +21,10 @@ bool pixkit::halftoning::errordiffusion::FloydSteinberg1975(const cv::Mat &src,c
 	//////////////////////////////////////////////////////////////////////////
 	// exception
 	if(src.type()!=CV_8U){
-		CV_Error(CV_BadNumChannels,"[halftoning::errordiffusion::FloydSteinberg1975] accepts only grayscale image");
+		CV_Error(cv::Error::BadNumChannels,"[halftoning::errordiffusion::FloydSteinberg1975] accepts only grayscale image");
 	}
 	if(src.empty()){
-		CV_Error(CV_HeaderIsNull,"[halftoning::errordiffusion::FloydSteinberg1975] image is empty");
+		CV_Error(cv::Error::HeaderIsNull,"[halftoning::errordiffusion::FloydSteinberg1975] image is empty");
 		return false;
 	}
 
@@ -69,11 +70,11 @@ bool pixkit::halftoning::errordiffusion::Jarvis1976(const cv::Mat &src, cv::Mat 
 	//////////////////////////////////////////////////////////////////////////
 	// exception
 	if(src.type()!=CV_8U){
-		CV_Error(CV_BadNumChannels,"[halftoning::errordiffusion::Jarvis1976] accepts only grayscale image");
+		CV_Error(cv::Error::BadNumChannels,"[halftoning::errordiffusion::Jarvis1976] accepts only grayscale image");
 		return false;
 	}
 	if(src.empty()){
-		CV_Error(CV_HeaderIsNull,"[halftoning::errordiffusion::Jarvis1976] image is empty");
+		CV_Error(cv::Error::HeaderIsNull,"[halftoning::errordiffusion::Jarvis1976] image is empty");
 		return false;
 	}
 
@@ -134,11 +135,11 @@ bool pixkit::halftoning::errordiffusion::Stucki1981(const cv::Mat &src, cv::Mat 
 	//////////////////////////////////////////////////////////////////////////
 	// exception
 	if(src.type()!=CV_8U){
-		CV_Error(CV_BadNumChannels,"[halftoning::errordiffusion::Stucki1981] accepts only grayscale image");
+		CV_Error(cv::Error::BadNumChannels,"[halftoning::errordiffusion::Stucki1981] accepts only grayscale image");
 		return false;
 	}
 	if(src.empty()){
-		CV_Error(CV_HeaderIsNull,"[halftoning::errordiffusion::Stucki1981] image is empty");
+		CV_Error(cv::Error::HeaderIsNull,"[halftoning::errordiffusion::Stucki1981] image is empty");
 		return false;
 	}
 
@@ -198,11 +199,11 @@ bool pixkit::halftoning::errordiffusion::ShiauFan1996(const cv::Mat &src, cv::Ma
 	//////////////////////////////////////////////////////////////////////////
 	// exception
 	if(src.type()!=CV_8U){
-		CV_Error(CV_BadNumChannels,"[halftoning::errordiffusion::ShiauFan1996] accepts only grayscale image");
+		CV_Error(cv::Error::BadNumChannels,"[halftoning::errordiffusion::ShiauFan1996] accepts only grayscale image");
 		return false;
 	}
 	if(src.empty()){
-		CV_Error(CV_HeaderIsNull,"[halftoning::errordiffusion::ShiauFan1996] image is empty");
+		CV_Error(cv::Error::HeaderIsNull,"[halftoning::errordiffusion::ShiauFan1996] image is empty");
 		return false;
 	}
 
@@ -262,7 +263,7 @@ bool pixkit::halftoning::errordiffusion::Ostromoukhov2001(const cv::Mat &src1b, 
 	//////////////////////////////////////////////////////////////////////////
 	// exception
 	if(src1b.type()!=CV_8UC1){
-		CV_Error(CV_BadNumChannels,"[halftoning::errordiffusion::Ostromoukhov2001] accepts only grayscale image");
+		CV_Error(cv::Error::BadNumChannels,"[halftoning::errordiffusion::Ostromoukhov2001] accepts only grayscale image");
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -502,7 +503,7 @@ bool pixkit::halftoning::errordiffusion::ZhouFang2003(const cv::Mat &src1b, cv::
 	//////////////////////////////////////////////////////////////////////////
 	// exception
 	if(src1b.type()!=CV_8U){
-		CV_Error(CV_BadNumChannels,"[halftoning::errordiffusion::ZhouFang2003] accepts only grayscale image");
+		CV_Error(cv::Error::BadNumChannels,"[halftoning::errordiffusion::ZhouFang2003] accepts only grayscale image");
 	}	
 
 	///////////////////////////////////////////////////////////////////////////
@@ -1082,11 +1083,11 @@ bool pixkit::halftoning::iterative::dualmetricDBS2002(const cv::Mat &src1b, cv::
 		float	gray	=	(float)i/255.;
 		// get weight
 		if(gray<=0.25){
-			weightmap1f.ptr<float>(i)[0]	=	std::sqrtf(1-((float)4.*gray-1.)*((float)4.*gray-1.));
+			weightmap1f.ptr<float>(i)[0]	=	std::sqrt(1-((float)4.*gray-1.)*((float)4.*gray-1.));
 		}else if(gray>0.25&&gray<=0.75){
-			weightmap1f.ptr<float>(i)[0]	=	std::fabsf((float)4.*gray-2);
+			weightmap1f.ptr<float>(i)[0]	=	std::fabs((float)4.*gray-2);
 		}else{
-			weightmap1f.ptr<float>(i)[0]	=	std::sqrtf(1-((float)4.*gray-3.)*((float)4.*gray-3.));
+			weightmap1f.ptr<float>(i)[0]	=	std::sqrt(1-((float)4.*gray-3.)*((float)4.*gray-3.));
 		}
 		weightmap1f.ptr<float>(i)[1]	=	1.-weightmap1f.ptr<float>(i)[0];
 	}
@@ -1319,7 +1320,7 @@ bool pixkit::halftoning::iterative::ElectrostaticHalftoning2010(const cv::Mat &s
 	//////////////////////////////////////////////////////////////////////////
 	///// exceptions
 	if(src.type()!=CV_8U){
-		CV_Error(CV_BadNumChannels,"[pixkit::halftoning::ElectrostaticHalftoning] image should be grayscale");
+		CV_Error(cv::Error::BadNumChannels,"[pixkit::halftoning::ElectrostaticHalftoning] image should be grayscale");
 	}
 	if(InitialCharge!=0&&InitialCharge!=1){
 		printf("[pixkit::halftoning::ElectrostaticHalftoning] InitialCharge should be 0 or 1");
@@ -1408,7 +1409,11 @@ bool pixkit::halftoning::iterative::ElectrostaticHalftoning2010(const cv::Mat &s
 	if(Debug==1)
 		cv::imwrite("output.bmp", real_dst);
 	else if(Debug==2){
+#ifdef _MSC_VER
 		sprintf_s(out_file,".\\output\\0.bmp");
+#else
+		sprintf(out_file,".\\output\\0.bmp");
+#endif
 		cv::imwrite(out_file, real_dst);
 	}
 
@@ -1587,7 +1592,11 @@ bool pixkit::halftoning::iterative::ElectrostaticHalftoning2010(const cv::Mat &s
 		if(Debug==1)
 			cv::imwrite("output.bmp",real_dst);
 		else if(Debug==2){
+#ifdef _MSC_VER
 			sprintf_s(out_file,".\\output\\%d.bmp",iterations);
+#else
+                        sprintf(out_file,".\\output\\%d.bmp",iterations);
+#endif
 			cv::imwrite(out_file,real_dst);
 		}
 	}
@@ -1610,11 +1619,11 @@ bool pixkit::halftoning::ordereddithering::Ulichney1987(const cv::Mat &src, cv::
 	//////////////////////////////////////////////////////////////////////////
 	// exception
 	if(src.type()!=CV_8U){
-		CV_Error(CV_BadNumChannels,"[halftoning::ordereddithering::Ulichney1987] accepts only grayscale image");
+		CV_Error(cv::Error::BadNumChannels,"[halftoning::ordereddithering::Ulichney1987] accepts only grayscale image");
 		return false;
 	}
 	if(src.empty()){
-		CV_Error(CV_HeaderIsNull,"[halftoning::ordereddithering::Ulichney1987] image is empty");
+		CV_Error(cv::Error::HeaderIsNull,"[halftoning::ordereddithering::Ulichney1987] image is empty");
 		return false;
 	}
 
@@ -1681,7 +1690,7 @@ bool pixkit::halftoning::ordereddithering::KackerAllebach1998(const cv::Mat &src
 	//////////////////////////////////////////////////////////////////////////
 	// exception
 	if(src1b.type()!=CV_8U){
-		CV_Error(CV_BadNumChannels,"[halftoning::ordereddithering::KackerAllebach1998] accepts only grayscale image");
+		CV_Error(cv::Error::BadNumChannels,"[halftoning::ordereddithering::KackerAllebach1998] accepts only grayscale image");
 	}
 	dst1b.create(src1b.size(),src1b.type());
 
@@ -1717,7 +1726,7 @@ bool pixkit::halftoning::ordereddithering::KackerAllebach1998(const cv::Mat &src
 			uchar	upper_DA_index		=	map_m1b.ptr<uchar>(i/sizeDitherArray)[j/sizeDitherArray+1];
 
 			doneflag=false;	// check whether the process is done
-			while(doneflag != true){	// 不可與之前的DA label相同
+			while(doneflag != true){	// \A4\A3\A5i\BBP\A4\A7\ABe\AA\BADA label\AC萓P
 
 				// get DA's label
 				current_DA_index = rand() % nDitherArray;	// 0 to 3
@@ -1762,11 +1771,11 @@ bool pixkit::halftoning::dotdiffusion::Knuth1987(const cv::Mat &src, cv::Mat &ds
 //////////////////////////////////////////////////////////////////////////
 	// exception
 	if(src.type()!=CV_8U){
-		CV_Error(CV_BadNumChannels,"[halftoning::ordereddithering::Knuth1987] accepts only grayscale image");
+		CV_Error(cv::Error::BadNumChannels,"[halftoning::ordereddithering::Knuth1987] accepts only grayscale image");
 		return false;
 	}
 	if(src.empty()){
-		CV_Error(CV_HeaderIsNull,"[halftoning::ordereddithering::Knuth1987] image is empty");
+		CV_Error(cv::Error::HeaderIsNull,"[halftoning::ordereddithering::Knuth1987] image is empty");
 		return false;
 	}
 
@@ -1875,15 +1884,15 @@ bool pixkit::halftoning::dotdiffusion::MeseVaidyanathan2000(const cv::Mat &src, 
 //////////////////////////////////////////////////////////////////////////
 	// exception
 	if(src.type()!=CV_8U){
-		CV_Error(CV_BadNumChannels,"[halftoning::ordereddithering::MeseVaidyanathan2000] accepts only grayscale image");
+		CV_Error(cv::Error::BadNumChannels,"[halftoning::ordereddithering::MeseVaidyanathan2000] accepts only grayscale image");
 		return false;
 	}
 	if(src.empty()){
-		CV_Error(CV_HeaderIsNull,"[halftoning::ordereddithering::MeseVaidyanathan2000] image is empty");
+		CV_Error(cv::Error::HeaderIsNull,"[halftoning::ordereddithering::MeseVaidyanathan2000] image is empty");
 		return false;
 	}
 	if(ClassMatrixSize!=8 && ClassMatrixSize!=16){
-		CV_Error(CV_StsBadArg,"[halftoning::ordereddithering::MeseVaidyanathan2000] BlockSize should be 8 or 16.");
+		CV_Error(cv::Error::StsBadArg,"[halftoning::ordereddithering::MeseVaidyanathan2000] BlockSize should be 8 or 16.");
 		return false;
 	}
 
@@ -2028,11 +2037,11 @@ bool pixkit::halftoning::dotdiffusion::GuoLiu2009(const cv::Mat &src, cv::Mat &d
 	//////////////////////////////////////////////////////////////////////////
 	// exception
 	if(ClassMatrixSize!=8&&ClassMatrixSize!=16){
-//		CV_Error(CV_StsBadArg,"[halftoning::dotdiffusion::GuoLiu2009] accepts only 8 and 16 these two class matrix sizes");
+//		CV_Error(cv::Error::StsBadArg,"[halftoning::dotdiffusion::GuoLiu2009] accepts only 8 and 16 these two class matrix sizes");
 		return false;
 	}
 	if(src.type()!=CV_8U){
-//		CV_Error(CV_BadNumChannels,"[halftoning::dotdiffusion::GuoLiu2009] accepts only grayscale image");
+//		CV_Error(cv::Error::BadNumChannels,"[halftoning::dotdiffusion::GuoLiu2009] accepts only grayscale image");
 		return false;
 	}
 	if(src.empty()){
@@ -2086,14 +2095,14 @@ bool pixkit::halftoning::dotdiffusion::GuoLiu2009(const cv::Mat &src, cv::Mat &d
 			pointList[CM[m][n]]	=	cv::Point(n,m);
 		}
 	}
-	// 進行dot_diffusion
+	// \B6i\A6\E6dot_diffusion
 	int		OSCW=DiffusionMaskSize/2;
 	int		OSCL=DiffusionMaskSize/2;
 	int		number=0;
 	while(number!=ClassMatrixSize*ClassMatrixSize){
 		for(int i=pointList[number].y;i<src.rows;i+=ClassMatrixSize){
 			for(int j=pointList[number].x;j<src.cols;j+=ClassMatrixSize){
-				// 取得error
+				// \A8\FA\B1oerror
 				double	error;
 				if(tdst1d.ptr<double>(i)[j]<(float)(nColors-1.)/2.){
 					error=tdst1d.ptr<double>(i)[j];
@@ -2102,22 +2111,22 @@ bool pixkit::halftoning::dotdiffusion::GuoLiu2009(const cv::Mat &src, cv::Mat &d
 					error=tdst1d.ptr<double>(i)[j]-(nColors-1.);
 					tdst1d.ptr<double>(i)[j]=(nColors-1.);
 				}
-				// 取得分母
+				// \A8\FA\B1o\A4\C0\A5\C0
 				double	fm=0.;
 				for(int m=-OSCW;m<=OSCW;m++){
 					for(int n=-OSCL;n<=OSCL;n++){
-						if(i+m>=0&&i+m<src.rows&&j+n>=0&&j+n<src.cols){	// 在影像範圍內
-							if(CM[(i+m)%ClassMatrixSize][(j+n)%ClassMatrixSize]>number){		// 可以擴散的區域
+						if(i+m>=0&&i+m<src.rows&&j+n>=0&&j+n<src.cols){	// \A6b\BCv\B9\B3\BDd\B3\F2\A4\BA
+							if(CM[(i+m)%ClassMatrixSize][(j+n)%ClassMatrixSize]>number){		// \A5i\A5H\C2X\B4\B2\AA\BA\B0炾\EC
 								fm+=DW[m+OSCW][n+OSCL];
 							}
 						}
 					}
 				}
-				// 進行擴散
+				// \B6i\A6\E6\C2X\B4\B2
 				for(int m=-OSCW;m<=OSCW;m++){
 					for(int n=-OSCL;n<=OSCL;n++){
-						if(i+m>=0&&i+m<src.rows&&j+n>=0&&j+n<src.cols){	// 在影像範圍內
-							if(CM[(i+m)%ClassMatrixSize][(j+n)%ClassMatrixSize]>number){		// 可以擴散的區域								
+						if(i+m>=0&&i+m<src.rows&&j+n>=0&&j+n<src.cols){	// \A6b\BCv\B9\B3\BDd\B3\F2\A4\BA
+							if(CM[(i+m)%ClassMatrixSize][(j+n)%ClassMatrixSize]>number){		// \A5i\A5H\C2X\B4\B2\AA\BA\B0炾\EC								
 								tdst1d.ptr<double>(i+m)[j+n]+=error*DW[m+OSCW][n+OSCL]/fm;
 							}
 						}
@@ -2148,11 +2157,11 @@ bool pixkit::halftoning::dotdiffusion::LippensPhilips2007(const cv::Mat &src, cv
 	//////////////////////////////////////////////////////////////////////////
 	// exception
 	if(src.type()!=CV_8U){
-		CV_Error(CV_BadNumChannels,"[halftoning::ErrorDiffusion::Hft_EDF_Ostromoukhov] accepts only grayscale image");
+		CV_Error(cv::Error::BadNumChannels,"[halftoning::ErrorDiffusion::Hft_EDF_Ostromoukhov] accepts only grayscale image");
 	}
 	dst.create(src.size(),src.type());
 
-	float	hysteresis=0.;	// 仍在尋找問題, 此為非0之結果不同於該論文, 故先行設定為0
+	float	hysteresis=0.;	// \A4\B4\A6b\B4M\A7\E4\B0\DD\C3D, \A6\B9\AC\B0\ABD0\A4\A7\B5\B2\AAG\A4\A3\A6P\A9\F3\B8蚑蚺\E5, \ACG\A5\FD\A6\E6\B3]\A9w\AC\B00
 
 	// = = = = = Get entire CM = = = = = //
 	int	order_global[8][8] = {{0,1,3,0,1,3,0,1},{3,3,2,0,1,2,3,3},{2,2,3,0,1,3,2,2},{0,1,2,0,1,2,0,1},{3,0,1,3,3,0,1,3},{2,0,1,2,2,0,1,2},{0,1,0,1,0,1,0,1},{3,3,3,3,3,3,3,3}};
@@ -2233,19 +2242,19 @@ bool pixkit::halftoning::dotdiffusion::LippensPhilips2007(const cv::Mat &src, cv
 	float	coe[5][5]={{1,2,3,2,1},{2,0,0,0,2},{3,0,0,0,3},{2,0,0,0,2},{1,2,3,2,1}};
 	int		OSCW=2;
 
-	// = = = = = 進行dot_diffusion = = = = = //
+	// = = = = = \B6i\A6\E6dot_diffusion = = = = = //
 	int		number=0;
 	while(number!=256){	// 256=CMsize*CMsize
 		for(int i=0;i<src.rows;i++){
 			for(int j=0;j<src.cols;j++){
 				if(entireCM[i][j]==number){
 
-					// get 分母
-					float	b_fm=0.,g_fm=0.;	// binary的分母 and grayscale的分母, sum(coe)=b_fm+g_fm;			
+					// get \A4\C0\A5\C0
+					float	b_fm=0.,g_fm=0.;	// binary\AA\BA\A4\C0\A5\C0 and grayscale\AA\BA\A4\C0\A5\C0, sum(coe)=b_fm+g_fm;			
 					for(int m=-OSCW;m<=OSCW;m++){
 						for(int n=-OSCW;n<=OSCW;n++){
-							if(i+m>=0 && i+m<src.rows && j+n>=0 && j+n<src.cols){	// 在影像範圍內
-								if(entireCM[i+m][j+n]<number){		// 範圍內擴散過的區域
+							if(i+m>=0 && i+m<src.rows && j+n>=0 && j+n<src.cols){	// \A6b\BCv\B9\B3\BDd\B3\F2\A4\BA
+								if(entireCM[i+m][j+n]<number){		// \BDd\B3\F2\A4\BA\C2X\B4\B2\B9L\AA\BA\B0炾\EC
 									b_fm += coe[m+OSCW][n+OSCW];
 								}
 							}
@@ -2253,24 +2262,24 @@ bool pixkit::halftoning::dotdiffusion::LippensPhilips2007(const cv::Mat &src, cv
 					}
 					g_fm=coe_sum-b_fm;
 
-					// 取得周圍的擴散補償
-					float	comp=0.;	// 補償
+					// \A8\FA\B1o\A9P\B3\F2\AA\BA\C2X\B4\B2\B8\C9\C0v
+					float	comp=0.;	// \B8\C9\C0v
 					if(b_fm!=0){
 						for(int m=-OSCW;m<=OSCW;m++){
 							for(int n=-OSCW;n<=OSCW;n++){
-								if(i+m>=0 && i+m<src.rows && j+n>=0 && j+n<src.cols){	// 在影像範圍內
-									if(entireCM[i+m][j+n]<number){		// 範圍內擴散過的區域
-										comp += coe[m+OSCW][n+OSCW] / b_fm * (RegImage[i+m][j+n] < 128 ? -1 : 1);	// 待確認
+								if(i+m>=0 && i+m<src.rows && j+n>=0 && j+n<src.cols){	// \A6b\BCv\B9\B3\BDd\B3\F2\A4\BA
+									if(entireCM[i+m][j+n]<number){		// \BDd\B3\F2\A4\BA\C2X\B4\B2\B9L\AA\BA\B0炾\EC
+										comp += coe[m+OSCW][n+OSCW] / b_fm * (RegImage[i+m][j+n] < 128 ? -1 : 1);	// \AB斒T\BB{
 									}
 								}
 							}
 						}
-						comp*=128.;	// 待確認
+						comp*=128.;	// \AB斒T\BB{
 					}else{
 						comp=0.;
 					}
 
-					// 取得error, 並取得halftone 輸出.
+					// \A8\FA\B1oerror, \A8癡\FA\B1ohalftone \BF\E9\A5X.
 					double	error;
 					if(RegImage[i][j] + comp*hysteresis < 128){
 						error = RegImage[i][j];
@@ -2281,11 +2290,11 @@ bool pixkit::halftoning::dotdiffusion::LippensPhilips2007(const cv::Mat &src, cv
 						//src.data[i*src.cols+j] = 255.;
 						dst.data[i*dst.cols+j] = 255;
 					}
-					// 進行擴散
+					// \B6i\A6\E6\C2X\B4\B2
 					for(int m=-OSCW;m<=OSCW;m++){
 						for(int n=-OSCW;n<=OSCW;n++){
-							if(i+m>=0&&i+m<src.rows&&j+n>=0&&j+n<src.cols){	// 在影像範圍內
-								if(entireCM[i+m][j+n]>number){		// 可以擴散的區域								
+							if(i+m>=0&&i+m<src.rows&&j+n>=0&&j+n<src.cols){	// \A6b\BCv\B9\B3\BDd\B3\F2\A4\BA
+								if(entireCM[i+m][j+n]>number){		// \A5i\A5H\C2X\B4\B2\AA\BA\B0炾\EC								
 									RegImage[i+m][j+n] += error * coe[m+OSCW][n+OSCW] / g_fm;
 								}
 							}
@@ -2319,15 +2328,15 @@ bool pixkit::halftoning::ungrouped::generateTwoComponentGaussianModel(cv::Mat &d
 		for(int n=-h_size;n<=h_size;n++){
 			float	x		=	(180.*(float)m)/(pi*S);
 			float	y		=	(180.*(float)n)/(pi*S);
-			float	chh		=	k1*std::expf(-(x*x+y*y)/(2.*sd1*sd1))	+	
-								k2*std::expf(-(x*x+y*y)/(2.*sd2*sd2));
+			float	chh		=	k1*std::exp(-(x*x+y*y)/(2.*sd1*sd1))	+	
+								k2*std::exp(-(x*x+y*y)/(2.*sd2*sd2));
 			dst1d.ptr<double>(m+h_size)[n+h_size]	=	fm*chh;
 		}
 	}
 	// normalize
 	dst1d	=	dst1d/sum(dst1d)[0];
-	float	sumv	=	std::fabsf(sum(dst1d)[0]-1.);
-	CV_DbgAssert(std::fabsf(sum(dst1d)[0]-1.)<0.000001);
+	float	sumv	=	std::fabs(sum(dst1d)[0]-1.);
+	CV_DbgAssert(std::fabs(sum(dst1d)[0]-1.)<0.000001);
 
 	return true;
 }

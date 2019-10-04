@@ -208,10 +208,10 @@ bool pixkit::comp::ColorBTC::YangTsai1998(const cv::Mat &src3b, cv::Mat &dst3b,c
 	//////////////////////////////////////////////////////////////////////////
 	///// exceptions
 	if(src3b.type()==CV_8UC1){
-		CV_Error(CV_StsUnsupportedFormat,"this function supports only color image (CV_8UC3) imgae.");
+		CV_Error(cv::Error::StsUnsupportedFormat,"this function supports only color image (CV_8UC3) imgae.");
 	}
 	if(K<=0){
-		CV_Error(CV_StsBadArg,"K should >=1.");
+		CV_Error(cv::Error::StsBadArg,"K should >=1.");
 	}
 
 	//////////////////////////////////////////////////////////////////////////

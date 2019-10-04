@@ -1,10 +1,11 @@
-#include <opencv2/core/core.hpp>
-#include <opencv2/highgui/highgui.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/core.hpp>
+#include <opencv2/highgui.hpp>
+#include <opencv2/imgproc.hpp>
 //opencv headers
 #include <iostream>
 #include <cmath>
-#include "..\..\include\pixkit-image.hpp"
+#include <vector>
+#include "../../include/pixkit-image.hpp"
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 using namespace std;
@@ -112,7 +113,7 @@ float *IW_SSIMj(const cv::Mat &X,const cv::Mat &Y,float *SSIMj){
 
 	int scale_j=4;
 	//build 5 scale of original signal X and distorted signal Y
-	cv::vector<cv::Mat> ScaleX,ScaleY;
+	std::vector<cv::Mat> ScaleX,ScaleY;
 	cv::buildPyramid(X,ScaleX,scale_j);
 	cv::buildPyramid(Y,ScaleY,scale_j);
 

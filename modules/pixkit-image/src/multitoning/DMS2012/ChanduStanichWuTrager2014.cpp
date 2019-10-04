@@ -385,10 +385,10 @@ bool pixkit::multitoning::ordereddithering::ChanduStanichWuTrager2014_genDitherA
 	//////////////////////////////////////////////////////////////////////////
 	///// exceptions
 	if(nColors<2){
-		CV_Error(CV_StsBadArg,"nColors should >= 2.");
+		CV_Error(cv::Error::StsBadArg,"nColors should >= 2.");
 	}
 	if(daSize<1){
-		CV_Error(CV_StsBadArg,"daSize should >= 1.");
+		CV_Error(cv::Error::StsBadArg,"daSize should >= 1.");
 	}
 
 	//////////////////////////////////////////////////////////////////////////

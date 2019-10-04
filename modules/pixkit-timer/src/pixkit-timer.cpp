@@ -16,17 +16,17 @@
 void pixkit::Timer::Start(){
 	if (is_started){
 		printf("pixkit::timer '%s' is already started. Nothing done.\n", title.c_str());
-		start_clock = cvGetTickCount();
+		start_clock = cv::getTickCount();
 		return;
 	}
-	is_started = true;	n_starts++;	start_clock = cvGetTickCount();
+	is_started = true;	n_starts++;	start_clock = cv::getTickCount();
 }
 void pixkit::Timer::Stop(){
 	if (!is_started){
 		printf("pixkit::timer '%s' is started. Nothing done\n", title.c_str());
 		return;
 	}
-	cumulative_clock += cvGetTickCount() - start_clock;	is_started = false;
+	cumulative_clock += cv::getTickCount() - start_clock;	is_started = false;
 }
 void pixkit::Timer::Reset(){
 	if (is_started)	{

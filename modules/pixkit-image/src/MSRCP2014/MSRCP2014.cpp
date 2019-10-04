@@ -5,10 +5,9 @@ MSRCP
 # include <stdio.h>   
 # include <math.h>   
 # include <string.h> 
-#include <opencv2\highgui\highgui.hpp>
-#include <opencv2\core\core.hpp>
-#include <opencv2\imgproc\imgproc.hpp>
-#include <opencv\cv.h>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/core.hpp>
+#include <opencv2/imgproc.hpp>
 #include "../../include/pixkit-image.hpp"
 
 
@@ -20,7 +19,7 @@ bool SimplestColorBalance(cv::Mat ori,float upperthresh,float lowerthresh){
 	cv::Mat sorted_ori;
 	cv::Mat reshapeOri;
 	reshapeOri=ori.reshape(0,1);
-	cv::sort(reshapeOri,sorted_ori,CV_SORT_ASCENDING  );
+	cv::sort(reshapeOri,sorted_ori,cv::SORT_ASCENDING  );
 
 	int Vmin=(sorted_ori.at<float>(lowerthresh));
 	int Vmax=sorted_ori.at<float>((ori.rows*ori.cols-1)-upperthresh);
